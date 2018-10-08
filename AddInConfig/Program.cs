@@ -21,16 +21,15 @@ namespace AddInConfigJson
             //创建一个绝对路径
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             WritingJson(desktopPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true);
-            ReadingJson(desktopPath);
+            //ReadingJson(desktopPath);
             Console.ReadKey();
         }
 
-         
 
         #region Json转换
 
         /// <summary>
-        ///     读取json
+        /// 读取json
         /// </summary>
         /// <param name="desktopPath"></param>
         private static void ReadingJson(string desktopPath)
@@ -44,11 +43,20 @@ namespace AddInConfigJson
         }
 
         /// <summary>
-        ///     添加json
+        /// 添加内容
         /// </summary>
         /// <param name="desktopPath"></param>
+        /// <param name="Id"></param>
+        /// <param name="Name"></param>
+        /// <param name="ToolTip"></param>
+        /// <param name="ImageListIndex"></param>
+        /// <param name="HintString"></param>
+        /// <param name="IsMenu"></param>
+        /// <param name="IsButton"></param>
+        /// <param name="ButtonIndex"></param>
+        /// <param name="iszj"></param>
         private static void WritingJson(string desktopPath, int Id, string Name, string ToolTip, int ImageListIndex,
-            string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool iszj)
+            string HintString, bool IsMenu, bool IsButton, int ButtonIndex,int level,int SearchID)
         {
             //创建用户集合
             List<AddInConfig> addInConfig = new List<AddInConfig>();
@@ -63,6 +71,7 @@ namespace AddInConfigJson
             AddAllConfig.IsMenu = IsMenu;
             AddAllConfig.IsButton = IsButton;
             AddAllConfig.ButtonIndex = ButtonIndex;
+
             addInConfig.Add(AddAllConfig);
 
             //转成json
@@ -72,6 +81,7 @@ namespace AddInConfigJson
         }
 
         #endregion
+
 
         #region IO读写
 
@@ -99,7 +109,7 @@ namespace AddInConfigJson
         /// <param name="json"></param>
         private static void SaveMyJson(string desktopPath, string json)
         {
-            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", desktopPath), FileMode.Create))
+            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", desktopPath), FileMode.Append))
             {
                 //写入
                 using (StreamWriter sw = new StreamWriter(fs))
