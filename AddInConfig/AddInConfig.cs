@@ -11,7 +11,7 @@ namespace AddInConfigJson
         {
             SubItems = new List<AddInConfig>();
         }
- 
+
         public int ID { set; get; }
 
         /// <summary>
@@ -34,4 +34,12 @@ namespace AddInConfigJson
         public List<AddInConfig> SubItems { set; get; }
     }
 
+    public class AllConfig
+    {
+        public AllConfig()
+        {
+            Items = new List<AddInConfig>();
+        }
+        public List<AddInConfig> Items { set; get; }
+    }
 }
