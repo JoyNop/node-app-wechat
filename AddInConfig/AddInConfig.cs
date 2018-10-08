@@ -33,13 +33,4 @@ namespace AddInConfigJson
 
         public List<AddInConfig> SubItems { set; get; }
     }
-
-    public class AllConfig
-    {
-        public AllConfig()
-        {
-            Items = new List<AddInConfig>();
-        }
-        public List<AddInConfig> Items { set; get; }
-    }
 }
