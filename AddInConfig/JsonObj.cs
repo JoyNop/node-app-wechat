@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
 
-namespace BaseData
+namespace AddInConfigJson
 {
     /// <summary>
     /// JSON字符串格式化后的对象
