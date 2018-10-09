@@ -29,20 +29,6 @@ namespace AddInConfigJson
         #region Json转换
 
         /// <summary>
-        /// 读取json
-        /// </summary>
-        /// <param name="SavePath"></param>
-        private static void ReadingJson(string SavePath)
-        {
-            string myStr = null;
-            //IO读取
-            myStr = GetMyJson(SavePath);
-            //转换
-            var jArray = JsonConvert.DeserializeObject<List<AddInConfig>>(myStr);
-            //进一步的转换
-        }
-
-        /// <summary>
         /// 添加内容
         /// </summary>
         private static void WritingJson(string SavePath, int Id, string Name, string ToolTip, int ImageListIndex,
@@ -51,8 +37,6 @@ namespace AddInConfigJson
             //创建用户集合
             List<AddInConfig> addInConfig = new List<AddInConfig>();
             AddInConfig AddAllConfig = new AddInConfig();
-
-            AddInConfig sub = new AddInConfig();
 
             //将添加内容
 
@@ -68,17 +52,19 @@ namespace AddInConfigJson
 
             addInConfig.Add(AddAllConfig);
 
+            //如果指定目录有文件并且正常打开，直接追加，如果不能打开，新建json文件
             try
             {
                 //IO读取
-
                 string JsonStr = GetMyJson(SavePath);
+
                 //转换
                 var jArray = JsonConvert.DeserializeObject<List<AddInConfig>>(JsonStr);
-
                 jArray.Add(AddAllConfig);
+
                 //转成json
                 string json = JsonConvert.SerializeObject(jArray, Formatting.Indented);
+
                 //保存到文件
                 SaveMyJson(SavePath, json);
             }
@@ -86,10 +72,10 @@ namespace AddInConfigJson
             {
                 //转成json
                 string json = JsonConvert.SerializeObject(addInConfig, Formatting.Indented);
+
                 //保存到文件
                 SaveMyJson(SavePath, json);
             }
-
 
             //ReadingJson(SavePath);
         }
