@@ -20,9 +20,10 @@ namespace AddInConfigJson
         {
             //创建一个绝对路径
             string SavePath = AppDomain.CurrentDomain.BaseDirectory;
-            WritingJson(SavePath, 2, "name", "tooltip", 23, "hint", true, false, 2);
+            
+            WritingJson(SavePath, 2, "name", "tooltip", 23, "hint", true, false, 2,true,2);
             //ReadingJson(desktopPath);
-            Console.ReadKey();
+          
         }
 
 
@@ -31,38 +32,32 @@ namespace AddInConfigJson
         /// <summary>
         /// 读取json
         /// </summary>
-        /// <param name="desktopPath"></param>
-        private static void ReadingJson(string desktopPath)
+        /// <param name="SavePath"></param>
+        private static void ReadingJson(string SavePath)
         {
             string myStr = null;
             //IO读取
-            myStr = GetMyJson(desktopPath);
+            myStr = GetMyJson(SavePath);
             //转换
             var jArray = JsonConvert.DeserializeObject<List<AddInConfig>>(myStr);
-            //进一步的转换我就不写啦
+            //进一步的转换
         }
 
         /// <summary>
         /// 添加内容
         /// </summary>
-        /// <param name="desktopPath"></param>
-        /// <param name="Id"></param>
-        /// <param name="Name"></param>
-        /// <param name="ToolTip"></param>
-        /// <param name="ImageListIndex"></param>
-        /// <param name="HintString"></param>
-        /// <param name="IsMenu"></param>
-        /// <param name="IsButton"></param>
-        /// <param name="ButtonIndex"></param>
-        /// <param name="iszj"></param>
+
         private static void WritingJson(string SavePath, int Id, string Name, string ToolTip, int ImageListIndex,
-            string HintString, bool IsMenu, bool IsButton, int ButtonIndex)
+            string HintString, bool IsMenu, bool IsButton, int ButtonIndex,bool isChildren,int SearchID)
         {
+             
             //创建用户集合
             List<AddInConfig> addInConfig = new List<AddInConfig>();
             AddInConfig AddAllConfig = new AddInConfig();
+            AddInConfig sub=new AddInConfig();
+            
             //将添加内容
-
+            
             AddAllConfig.ID = Id;
             AddAllConfig.Name = Name;
             AddAllConfig.ToolTip = ToolTip;
@@ -72,12 +67,29 @@ namespace AddInConfigJson
             AddAllConfig.IsButton = IsButton;
             AddAllConfig.ButtonIndex = ButtonIndex;
 
-            addInConfig.Add(AddAllConfig);
+            sub.ID = Id;
+            sub.Name = Name;
+            sub.ToolTip = ToolTip;
+            sub.ImageListIndex = ImageListIndex;
+            sub.HintString = HintString;
+            sub.IsMenu = IsMenu;
+            sub.IsButton = IsButton;
+            sub.ButtonIndex = ButtonIndex;
+            
+            AddAllConfig.SubItems.Add(sub);
 
+
+            addInConfig.Add(AddAllConfig);
+            
+
+            
+
+             
             //转成json
             string json = JsonConvert.SerializeObject(addInConfig, Formatting.Indented);
-            //保存到桌面的文件
-            SaveMyJson(SavePath, json);
+            //保存到文件
+            //SaveMyJson(SavePath, json);
+            //ReadingJson(SavePath);
         }
 
         #endregion
@@ -109,7 +121,7 @@ namespace AddInConfigJson
         /// <param name="json"></param>
         private static void SaveMyJson(string SavePath, string json)
         {
-            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", SavePath), FileMode.Append))
+            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", SavePath), FileMode.Create,FileAccess.Write))
             {
                 //写入
                 using (StreamWriter sw = new StreamWriter(fs))
