@@ -19,8 +19,8 @@ namespace AddInConfigJson
         static void Main(string[] args)
         {
             //创建一个绝对路径
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            WritingJson(desktopPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true);
+            string SavePath = AppDomain.CurrentDomain.BaseDirectory;
+            WritingJson(SavePath, 2, "name", "tooltip", 23, "hint", true, false, 2);
             //ReadingJson(desktopPath);
             Console.ReadKey();
         }
@@ -55,8 +55,8 @@ namespace AddInConfigJson
         /// <param name="IsButton"></param>
         /// <param name="ButtonIndex"></param>
         /// <param name="iszj"></param>
-        private static void WritingJson(string desktopPath, int Id, string Name, string ToolTip, int ImageListIndex,
-            string HintString, bool IsMenu, bool IsButton, int ButtonIndex,int level,int SearchID)
+        private static void WritingJson(string SavePath, int Id, string Name, string ToolTip, int ImageListIndex,
+            string HintString, bool IsMenu, bool IsButton, int ButtonIndex)
         {
             //创建用户集合
             List<AddInConfig> addInConfig = new List<AddInConfig>();
@@ -77,7 +77,7 @@ namespace AddInConfigJson
             //转成json
             string json = JsonConvert.SerializeObject(addInConfig, Formatting.Indented);
             //保存到桌面的文件
-            SaveMyJson(desktopPath, json);
+            SaveMyJson(SavePath, json);
         }
 
         #endregion
@@ -86,13 +86,13 @@ namespace AddInConfigJson
         #region IO读写
 
         /// <summary>
-        ///     IO读取本地json
+        /// IO读取本地json
         /// </summary>
-        /// <param name="desktopPath"></param>
+        /// <param name="SavePath"></param>
         /// <returns></returns>
-        private static string GetMyJson(string desktopPath)
+        private static string GetMyJson(string SavePath)
         {
-            using (FileStream fsRead = new FileStream(string.Format("{0}\\app.json", desktopPath), FileMode.Open))
+            using (FileStream fsRead = new FileStream(string.Format("{0}\\app.json", SavePath), FileMode.Open))
             {
                 //读取加转换
                 int fsLen = (int) fsRead.Length;
@@ -103,13 +103,13 @@ namespace AddInConfigJson
         }
 
         /// <summary>
-        ///     将我们的json保存到本地
+        ///  将json保存到本地
         /// </summary>
-        /// <param name="desktopPath"></param>
+        /// <param name="SavePath"></param>
         /// <param name="json"></param>
-        private static void SaveMyJson(string desktopPath, string json)
+        private static void SaveMyJson(string SavePath, string json)
         {
-            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", desktopPath), FileMode.Append))
+            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", SavePath), FileMode.Append))
             {
                 //写入
                 using (StreamWriter sw = new StreamWriter(fs))
