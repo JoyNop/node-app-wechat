@@ -32,7 +32,7 @@ namespace AddInConfigJson
         /// 添加内容
         /// </summary>
         private static void WritingJson(string SavePath, int Id, string Name, string ToolTip, int ImageListIndex,
-            string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChildren, int SearchID)
+            string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChild, int SearchID)
         {
             //创建用户集合
             List<AddInConfig> addInConfig = new List<AddInConfig>();
@@ -60,7 +60,21 @@ namespace AddInConfigJson
 
                 //转换
                 var jArray = JsonConvert.DeserializeObject<List<AddInConfig>>(JsonStr);
-                jArray.Add(AddAllConfig);
+
+                if (isChild)
+                {
+                    for (int i = 0; i < jArray.Count; i++)
+                    {
+                        if (jArray[i].ID == SearchID)
+                        {
+                            jArray[i].SubItems.Add(AddAllConfig);
+                        }
+                    }
+                }
+                else
+                {
+                    jArray.Add(AddAllConfig);
+                }
 
                 //转成json
                 string json = JsonConvert.SerializeObject(jArray, Formatting.Indented);
