@@ -10,13 +10,9 @@ using System.Threading.Tasks;
 
 namespace AddInConfigJson
 {
-    class Program
+    class AddInConfig
     {
-        /// <summary>
-        /// 主程序入口
-        /// </summary>
-        /// <param name="args"></param>
-        static void Main(string[] args)
+        private void AddInConfigJson()
         {
             //创建一个绝对路径
             string SavePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -35,8 +31,8 @@ namespace AddInConfigJson
             string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChild, int SearchID)
         {
             //创建用户集合
-            List<AddInConfig> addInConfig = new List<AddInConfig>();
-            AddInConfig AddAllConfig = new AddInConfig();
+            List<AddInConfigModel> addInConfig = new List<AddInConfigModel>();
+            AddInConfigModel AddAllConfig = new AddInConfigModel();
 
             //将添加内容
 
@@ -59,7 +55,7 @@ namespace AddInConfigJson
                 string JsonStr = GetMyJson(SavePath);
 
                 //转换
-                var jArray = JsonConvert.DeserializeObject<List<AddInConfig>>(JsonStr);
+                var jArray = JsonConvert.DeserializeObject<List<AddInConfigModel>>(JsonStr);
 
                 if (isChild)
                 {

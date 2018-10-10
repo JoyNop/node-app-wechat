@@ -5,11 +5,11 @@ using System.Text;
 
 namespace AddInConfigJson
 {
-    public class AddInConfig
+    public class AddInConfigModel
     {
-        public AddInConfig()
+        public AddInConfigModel()
         {
-            SubItems = new List<AddInConfig>();
+            SubItems = new List<AddInConfigModel>();
         }
 
         public int ID { set; get; }
@@ -31,6 +31,6 @@ namespace AddInConfigJson
 
         public int ButtonIndex { set; get; }
 
-        public List<AddInConfig> SubItems { set; get; }
+        public List<AddInConfigModel> SubItems { set; get; }
     }
 }
