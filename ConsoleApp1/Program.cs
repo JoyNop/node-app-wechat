@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+ 
 
 namespace ConsoleApp1
 {
@@ -9,7 +10,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-
+            new AddInConfigJson.AddInConfig().AddInConfigJson();
         }
     }
 }

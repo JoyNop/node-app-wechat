@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace AddInConfigJson
 {
-    class AddInConfig
+   public class AddInConfig
     {
-        private void AddInConfigJson()
+        public void AddInConfigJson()
         {
             //创建一个绝对路径
             string SavePath = AppDomain.CurrentDomain.BaseDirectory;

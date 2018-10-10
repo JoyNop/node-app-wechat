@@ -26,11 +26,6 @@ namespace AddInConfigJson
         static string SysDbPwd = "CJsKSA$x42mC%8n";
 
         /// <summary>
-        /// 用户数据库密码
-        /// </summary>
-        static string UserDbPwd = "4wGEJQr!8U!fKgx";
-
-        /// <summary>
         /// 创建数据库
         /// </summary>
         /// <param name="dbtype"></param>
