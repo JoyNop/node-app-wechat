@@ -27,13 +27,7 @@ namespace AddInConfigJson
             }
         }
 
-        /// <summary>
-        /// 切换用户需要重新设置DAL
-        /// </summary>
-        public override void SwitchUser()
-        {
-            dal = null;
-        }
+
 
         public override string ConnectionKey
         {

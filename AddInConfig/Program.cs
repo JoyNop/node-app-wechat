@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
  
 
-namespace ConsoleApp1
+namespace AddInConfigJson
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //new AddInConfigJson.AddInConfig().AddInConfigJson();
+            Console.WriteLine("hello");
+ 
+
+            Console.ReadKey();
         }
     }
 }
