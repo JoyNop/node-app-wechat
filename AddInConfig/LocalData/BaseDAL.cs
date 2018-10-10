@@ -11,14 +11,16 @@ namespace AddInConfigJson
     /// </summary>
     public abstract class IBaseDAL
     {
- 
+        #region 构造函数
+        public IBaseDAL()
+        {
+            UpdateFieldAndTable();
+             
+        }
+        #endregion
 
         #region 基础属性       
-        private void SwitchUserEvent()
-        {
-            SwitchUser();
-        }
-
+ 
         /// <summary>
         /// 非个人数据库则不需要实现该方法（切换用户需要重新检查数据库）
         /// </summary>

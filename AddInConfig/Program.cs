@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -14,17 +15,17 @@ namespace AddInConfigJson
             Console.WriteLine("hello");
 
             SysPluginModel sys = new SysPluginModel();
-            sys.BaseFile = "1";
+            sys.BaseFile = "1123";
             sys.IsOld = true;
-            sys.Name = "234";
-            sys.SavePath = "34";
-            sys.SoftId = 3444444;
-            sys.SoftKey = "c34";
-            sys.SoftSize = "234";
-            sys.Version = "2.34";
+            sys.Name = "2341111";
+            sys.SavePath = "3423";
+            sys.SoftId = 39;
+            sys.SoftKey = "c34234";
+            sys.SoftSize = "22344";
+            sys.Version = "234234";
 
             Plugin.AddPlugin(sys);
-
+            int a=Plugin.GetPluginList().Count;
 
             Console.ReadKey();
         }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddInConfigJson", "AddInCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BD516530-6A8B-4F16-8340-B8805FBD7F1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{AB9392C0-789A-4064-BB8F-67111D2EE2AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BD516530-6A8B-4F16-8340-B8805FBD7F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD516530-6A8B-4F16-8340-B8805FBD7F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD516530-6A8B-4F16-8340-B8805FBD7F1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB9392C0-789A-4064-BB8F-67111D2EE2AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB9392C0-789A-4064-BB8F-67111D2EE2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB9392C0-789A-4064-BB8F-67111D2EE2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB9392C0-789A-4064-BB8F-67111D2EE2AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
