@@ -54,7 +54,7 @@ namespace AddInConfigJson
         {
             get
             {
-                return @"create table if not exists SysPlugin (ID integer NOT NULL PRIMARY KEY AUTOINCREMENT,SoftKey nvarchar(50),Version nvarchar(20),SavePath nvarchar(500),BaseFile nvarchar(100))";
+                return @"create table if not exists SysPlugin (ID integer NOT NULL PRIMARY KEY AUTOINCREMENT,SoftKey nvarchar(50),SoftId nvarchar(20),SavePath nvarchar(500),SoftName nvarchar(100),ImageListIndex nvarchar(20))";
             }
         }
     }

@@ -15,9 +15,9 @@ namespace AddInConfigJson
         public void AddInConfigJson()
         {
             //创建一个绝对路径
-            string SavePath = AppDomain.CurrentDomain.BaseDirectory;
+            string SaveConfPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            WritingJson(SavePath, 2, "name", "tooltip", 23, "hint", true, false, 2, true, 2);
+            WritingJson(SaveConfPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true, 2);
             //ReadingJson(desktopPath);
         }
 
@@ -27,9 +27,11 @@ namespace AddInConfigJson
         /// <summary>
         /// 添加内容
         /// </summary>
-        private static void WritingJson(string SavePath, int Id, string Name, string ToolTip, int ImageListIndex,
+        private static void WritingJson(string SaveConfPath, int Id, string Name, string ToolTip, int ImageListIndex,
             string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChild, int SearchID)
         {
+
+ 
             //创建用户集合
             List<AddInConfigModel> addInConfig = new List<AddInConfigModel>();
             AddInConfigModel AddAllConfig = new AddInConfigModel();
@@ -52,7 +54,7 @@ namespace AddInConfigJson
             try
             {
                 //IO读取
-                string JsonStr = GetMyJson(SavePath);
+                string JsonStr = GetMyJson(SaveConfPath);
 
                 //转换
                 var jArray = JsonConvert.DeserializeObject<List<AddInConfigModel>>(JsonStr);
@@ -76,7 +78,7 @@ namespace AddInConfigJson
                 string json = JsonConvert.SerializeObject(jArray, Formatting.Indented);
 
                 //保存到文件
-                SaveMyJson(SavePath, json);
+                SaveMyJson(SaveConfPath, json);
             }
             catch (Exception e)
             {
@@ -84,7 +86,7 @@ namespace AddInConfigJson
                 string json = JsonConvert.SerializeObject(addInConfig, Formatting.Indented);
 
                 //保存到文件
-                SaveMyJson(SavePath, json);
+                SaveMyJson(SaveConfPath, json);
             }
 
             //ReadingJson(SavePath);
@@ -100,9 +102,9 @@ namespace AddInConfigJson
         /// </summary>
         /// <param name="SavePath"></param>
         /// <returns></returns>
-        private static string GetMyJson(string SavePath)
+        private static string GetMyJson(string SaveConfPath)
         {
-            using (FileStream fsRead = new FileStream(string.Format("{0}\\app.json", SavePath), FileMode.Open))
+            using (FileStream fsRead = new FileStream(string.Format("{0}\\app.json", SaveConfPath), FileMode.Open))
             {
                 //读取加转换
                 int fsLen = (int) fsRead.Length;
@@ -117,9 +119,9 @@ namespace AddInConfigJson
         /// </summary>
         /// <param name="SavePath"></param>
         /// <param name="json"></param>
-        private static void SaveMyJson(string SavePath, string json)
+        private static void SaveMyJson(string SaveConfPath, string json)
         {
-            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", SavePath), FileMode.Create,
+            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", SaveConfPath), FileMode.Create,
                 FileAccess.Write))
             {
                 //写入

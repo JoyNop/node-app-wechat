@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AddInConfigJson.Utility;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace AddInConfigJson
             if (dt != null && dt.Rows.Count > 0)
             {
                 model.SoftKey = SoftKey;
-                model.SavePath = dt.Rows[0]["SavePath"].ToString();
-                model.Version = dt.Rows[0]["Version"].ToString();
-                model.BaseFile = dt.Rows[0]["BaseFile"].ToString();
+                model.SavePath = MdConvert.ToString(dt.Rows[0]["SavePath"]);
+                model.SoftId = MdConvert.ToInt32(dt.Rows[0]["SoftId"]);
+                model.SoftName = MdConvert.ToString(dt.Rows[0]["SoftName"]);
+                model.ImageListIndex = MdConvert.ToInt32(dt.Rows[0]["ImageListIndex"]);
+
+
 
                 return model;
             }
@@ -49,10 +53,11 @@ namespace AddInConfigJson
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     SysPluginModel model = new SysPluginModel();
-                    model.SoftKey = dt.Rows[i]["SoftKey"].ToString();
-                    model.SavePath = dt.Rows[i]["SavePath"].ToString();
-                    model.Version = dt.Rows[i]["Version"].ToString();
-                    model.BaseFile = dt.Rows[i]["BaseFile"].ToString();
+                    model.SoftKey = MdConvert.ToString(dt.Rows[i]["SoftKey"]);
+                    model.SavePath = MdConvert.ToString(dt.Rows[i]["SavePath"]);
+                    model.SoftId = MdConvert.ToInt32(dt.Rows[i]["SoftId"]);
+                    model.SoftName = MdConvert.ToString(dt.Rows[i]["SoftName"]);
+                    model.ImageListIndex = MdConvert.ToInt32(dt.Rows[i]["ImageListIndex"]);
                     pluginList.Add(model);
                 }
             }
@@ -69,9 +74,10 @@ namespace AddInConfigJson
             SysPluginDAL dal = SysPluginDAL.Instance;
             List<Col> listcol = new List<Col>();
             listcol.Add(new Col(nameof(pluginModel.SoftKey), pluginModel.SoftKey));
-            listcol.Add(new Col(nameof(pluginModel.Version), pluginModel.Version));
+            listcol.Add(new Col(nameof(pluginModel.SoftId), pluginModel.SoftId));
             listcol.Add(new Col(nameof(pluginModel.SavePath), pluginModel.SavePath));
-            listcol.Add(new Col(nameof(pluginModel.BaseFile), pluginModel.BaseFile));
+            listcol.Add(new Col(nameof(pluginModel.SoftName), pluginModel.SoftName));
+            listcol.Add(new Col(nameof(pluginModel.ImageListIndex), pluginModel.ImageListIndex));
 
             if (dal.GetList(null, new SearchParameter("SoftKey", pluginModel.SoftKey)).Tables[0].Rows.Count > 0)
             {
