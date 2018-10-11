@@ -10,28 +10,41 @@ using System.Threading.Tasks;
 
 namespace AddInConfigJson
 {
-   public class AddInConfig
+    public class AddInConfig
     {
         public void AddInConfigJson()
         {
-            //创建一个绝对路径
-            string SaveConfPath = AppDomain.CurrentDomain.BaseDirectory;
+            //获取本地文件夹
+            string ConfPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            WritingJson(SaveConfPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true, 2);
+            WritingJson(ConfPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true, 2);
             //ReadingJson(desktopPath);
         }
 
 
-        #region Json转换
-
-        /// <summary>
-        /// 添加内容
-        /// </summary>
-        private static void WritingJson(string SaveConfPath, int Id, string Name, string ToolTip, int ImageListIndex,
-            string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChild, int SearchID)
-        {
+        #region 数据操作
 
  
+        private static void WritingJson(string ConfPath, int Id, string Name, string ToolTip, int ImageListIndex,
+            string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChild, int SearchID)
+        {
+            #region 存入本地SQLITE
+
+            SysPluginModel sys = new SysPluginModel();
+            sys.SoftId = Id;
+            sys.SoftName = Name;
+            sys.ImageListIndex = ImageListIndex;
+            sys.SavePath = "3423";
+            sys.SoftKey = "c3433333";
+
+
+            Plugin.AddPlugin(sys);
+            int a = Plugin.GetPluginList().Count;
+
+            #endregion
+
+            #region 创建config
+
             //创建用户集合
             List<AddInConfigModel> addInConfig = new List<AddInConfigModel>();
             AddInConfigModel AddAllConfig = new AddInConfigModel();
@@ -54,7 +67,7 @@ namespace AddInConfigJson
             try
             {
                 //IO读取
-                string JsonStr = GetMyJson(SaveConfPath);
+                string JsonStr = GetMyJson(ConfPath);
 
                 //转换
                 var jArray = JsonConvert.DeserializeObject<List<AddInConfigModel>>(JsonStr);
@@ -78,7 +91,7 @@ namespace AddInConfigJson
                 string json = JsonConvert.SerializeObject(jArray, Formatting.Indented);
 
                 //保存到文件
-                SaveMyJson(SaveConfPath, json);
+                SaveMyJson(ConfPath, json);
             }
             catch (Exception e)
             {
@@ -86,10 +99,10 @@ namespace AddInConfigJson
                 string json = JsonConvert.SerializeObject(addInConfig, Formatting.Indented);
 
                 //保存到文件
-                SaveMyJson(SaveConfPath, json);
+                SaveMyJson(ConfPath, json);
             }
 
-            //ReadingJson(SavePath);
+            #endregion
         }
 
         #endregion
@@ -102,9 +115,9 @@ namespace AddInConfigJson
         /// </summary>
         /// <param name="SavePath"></param>
         /// <returns></returns>
-        private static string GetMyJson(string SaveConfPath)
+        private static string GetMyJson(string ConfPath)
         {
-            using (FileStream fsRead = new FileStream(string.Format("{0}\\app.json", SaveConfPath), FileMode.Open))
+            using (FileStream fsRead = new FileStream(string.Format("{0}\\Addin_Config.json", ConfPath), FileMode.Open))
             {
                 //读取加转换
                 int fsLen = (int) fsRead.Length;
@@ -119,9 +132,9 @@ namespace AddInConfigJson
         /// </summary>
         /// <param name="SavePath"></param>
         /// <param name="json"></param>
-        private static void SaveMyJson(string SaveConfPath, string json)
+        private static void SaveMyJson(string ConfPath, string json)
         {
-            using (FileStream fs = new FileStream(string.Format("{0}\\app.json", SaveConfPath), FileMode.Create,
+            using (FileStream fs = new FileStream(string.Format("{0}\\Addin_Config.json", ConfPath), FileMode.Create,
                 FileAccess.Write))
             {
                 //写入
