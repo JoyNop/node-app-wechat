@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -18,16 +20,16 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Bitmap Image1 = new Bitmap(Application.StartupPath + "\\MainIconLarge.bmp");
-            Bitmap Image2 = new Bitmap(Application.StartupPath + "\\MainIconLarge.bmp");
+            Bitmap img1 = new Bitmap(Application.StartupPath + "\\MainIconLarge.bmp");
+            Bitmap img2 = new Bitmap(Application.StartupPath + "\\MainIconLarge.bmp");
             //pictureBox2.Image = Image1;
             //pictureBox3.Image = Image2;
 
-            PictureBox aa = new PictureBox();
-            aa.Image = Image1;
-            Image img1 = aa.Image;
-            aa.Image = Image2;
-            Image img2 = aa.Image;
+            //PictureBox aa = new PictureBox();
+            //aa.Image = Image1;
+            //Image img1 = aa.Image;
+            //aa.Image = Image2;
+            //Image img2 = aa.Image;
 
             int uniteWidth = img1.Width; //图片统一高度
             int uniteHeight = img1.Height; //图片统一宽度
@@ -66,12 +68,17 @@ namespace WindowsFormsApp1
                 }
             }
 
-            pictureBox1.Image = tableChartImageCol1;
+            tableChartImageCol1.Save(AppDomain.CurrentDomain.BaseDirectory + "\\aaa.bmp");
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
+            WebClient client = new WebClient();
+            byte[] bytes = client.DownloadData(new Uri("http://pic.maidiyun.com/c29mdC9sb2dv_477_64x64.png"));
 
+            MemoryStream ms = new MemoryStream(bytes);
+            ms.Seek(0, SeekOrigin.Begin);
+            ms.WriteTo(new FileStream("aaa.png", FileMode.OpenOrCreate));
         }
     }
 }

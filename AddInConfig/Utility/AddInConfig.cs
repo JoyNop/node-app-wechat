@@ -17,7 +17,7 @@ namespace AddInConfigJson
             //获取本地文件夹
             string ConfPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            WritingJson(ConfPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true, 2);
+            WritingConfig(ConfPath, 2, "name", "tooltip", 23, "hint", true, false, 2, true, 2);
             //ReadingJson(desktopPath);
         }
 
@@ -25,7 +25,7 @@ namespace AddInConfigJson
         #region 数据操作
 
  
-        private static void WritingJson(string ConfPath, int Id, string Name, string ToolTip, int ImageListIndex,
+        private static void WritingConfig(string ConfPath, int Id, string Name, string ToolTip, int ImageListIndex,
             string HintString, bool IsMenu, bool IsButton, int ButtonIndex, bool isChild, int SearchID)
         {
             #region 存入本地SQLITE

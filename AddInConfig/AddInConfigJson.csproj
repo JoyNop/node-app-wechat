@@ -75,7 +75,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\AddInConfig.cs" />
-    <Compile Include="Utility\ImageAdd.cs" />
+    <Compile Include="Utility\AddImage.cs" />
     <Compile Include="Utility\MdConvert.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
