@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MDToolsMessage">
+      <HintPath>..\..\..\2019\SwPlusForMDB\MDToolsMessage\bin\Debug\MDToolsMessage.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

@@ -17,19 +17,16 @@ namespace AddInConfigJson.Utility
         {
             try
             {
-                DownImg(url);//下载图片
-                string sourceFile = Application.StartupPath + "\\" + filename + ".bmp";
-                
-                if (File.Exists(@sourceFile))  //是否有指定配置图片名
+                DownImg(url); //下载图片
+                string sourceFile = Application.StartupPath + "\\" + filename + ".bmp"; //原始图片
+
+                if (File.Exists(@sourceFile)) //是否有指定配置图片名
                 {
-                    string copyFile = Application.StartupPath + "\\" + filename + "bak.bmp";
+                    string copyFile = Application.StartupPath + "\\" + filename + ".bak.bmp";
                     bool isrewrite = true; // true=覆盖已存在的同名文件
                     System.IO.File.Copy(sourceFile, copyFile, isrewrite);
-
-
                     Bitmap img1 = new Bitmap(copyFile);
-                    Bitmap img2 = new Bitmap(Application.StartupPath + "\\down.png");
-
+                    Bitmap img2 = new Bitmap(Application.StartupPath + "\\down.png"); //追加图片
 
                     int uniteWidth = img1.Width; //图片统一高度
                     int uniteHeight = img1.Height; //图片统一宽度
@@ -47,7 +44,7 @@ namespace AddInConfigJson.Utility
                         imgListCopy.Add(b);
                     }
 
-                    for (int i = 0; i < imageList.Count; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         if (imageList.Count - 1 >= i)
                         {
@@ -61,7 +58,7 @@ namespace AddInConfigJson.Utility
                         //图片白板1
                         Graphics graph = Graphics.FromImage(tableChartImageCol1);
 
-                        //初始化这个大图
+                        //初始化
                         graph.DrawImage(tableChartImageCol1, uniteWidth + uniteWidth2, uniteHeight);
 
                         //初始化当前宽
@@ -69,35 +66,35 @@ namespace AddInConfigJson.Utility
                         graph.Clear(System.Drawing.Color.White); ////清除画布,背景设置为白色
                         foreach (Image i in imageList)
                         {
-                            graph.DrawImage(i, currentWidth, 0); //拼图--图片拼起来
+                            graph.DrawImage(i, currentWidth, 0); //拼图
                             currentWidth += i.Width; //拼接改图后,当前宽度
                         }
+
+                        ImgNum = currentWidth / img2.Width;
                     }
-                    tableChartImageCol1.Save(AppDomain.CurrentDomain.BaseDirectory + "\\" + filename + "bmp");
+
+                    tableChartImageCol1.Save(AppDomain.CurrentDomain.BaseDirectory + "\\" + filename + ".bmp");
                 }
                 else
                 {
+                    ImgNum = 1; //图片ID顺序
                     Bitmap img1 = new Bitmap(Application.StartupPath + "\\down.png");
                     int uniteWidth = img1.Width; //图片统一高度
                     int uniteHeight = img1.Height; //图片统一宽度
                     Bitmap tableChartImageCol1 = new Bitmap(uniteWidth, uniteHeight); //第一行图片
-                    //图片白板1
                     Graphics graph = Graphics.FromImage(tableChartImageCol1);
-
-                    //初始化这个大图
-                    graph.DrawImage(tableChartImageCol1, uniteWidth , uniteHeight);
+                    graph.DrawImage(tableChartImageCol1, uniteWidth, uniteHeight);
 
                     //初始化当前宽
                     int currentWidth = 0;
                     graph.Clear(System.Drawing.Color.White); ////清除画布,背景设置为白色
-                    graph.DrawImage(img1, currentWidth,0); //拼图--图片拼起来
+                    graph.DrawImage(img1, currentWidth, 0); //拼图
                     currentWidth = uniteWidth; //拼接改图后,当前宽度
                     tableChartImageCol1.Save(AppDomain.CurrentDomain.BaseDirectory + "\\" + filename + ".bmp");
-
                 }
-
-                
             }
+
+
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
@@ -113,18 +110,7 @@ namespace AddInConfigJson.Utility
             Bitmap img1 = new Bitmap(Image.FromStream(stream));
             img1.Save(AppDomain.CurrentDomain.BaseDirectory + "\\down.png");
         }
-    }
 
-    public enum JoinMode
-    {
-        /// <summary>
-        /// 横向
-        /// </summary>
-        Horizontal,
-
-        /// <summary>
-        /// 纵向
-        /// </summary>
-        Vertical
+        public static int ImgNum { get; set; }
     }
 }
