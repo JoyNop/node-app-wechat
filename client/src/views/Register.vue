@@ -13,17 +13,22 @@
           <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password"/>
           <InputGroup label="确认密码" placeholder="请确认密码" v-model="user.password2" type="password"/>
         </form>
+        <div class="btn_wrap">
+          <YButton :disabled="isDisabled" @click="registerClick">注册</YButton>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import InputGroup from "../components/InputGroup";
+import YButton from "../components/YButton";
 
 export default {
   name: "register",
   components: {
-    InputGroup
+    InputGroup,
+    YButton
   },
   data() {
     return {
@@ -34,6 +39,36 @@ export default {
         password2: ""
       }
     };
+  },
+  computed: {
+    isDisabled() {
+      if (
+        this.user.name &&
+        this.user.email &&
+        this.user.password &&
+        this.user.password2
+      )
+        return false;
+      else return true;
+    }
+  },
+  methods: {
+    registerClick(event) {
+      var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+      if (!reg.test(this.user.email)) {
+        alert("请输入合法的邮箱地址！");
+        return;
+      }
+      if (this.user.password !== this.user.password2) {
+        alert("两次密码输入不一致！");
+        return;
+      }
+      this.$axios.post("/api/users/register", this.user).then(res => {
+        // 注册成功
+        alert("注册成功");
+        this.$router.push("/login");
+      });
+    }
   }
 };
 </script>
