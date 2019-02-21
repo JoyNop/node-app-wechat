@@ -11,7 +11,7 @@
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\""
   },
-  "author": "misterWu",
+  "author": "JoyNop",
   "license": "ISC",
   "description": "",
   "dependencies": {

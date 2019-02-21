@@ -8,6 +8,7 @@
     "start": "npm run serve"
   },
   "dependencies": {
+    "jwt-decode": "^2.2.0",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1"
   },

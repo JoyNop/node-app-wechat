@@ -1,58 +1,67 @@
 <template>
   <div class="login">
-    <div class="title">用户</div>
+    <div class="title">用户登录</div>
     <div class="content">
       <!-- 表单 -->
       <form>
-        <InputGroup label="账号" placeholder="请填写邮箱" v-model="user.email"/>
-        <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password"/>
+        <InputGroup label="账号" placeholder="请填写邮箱" v-model="user.email"></InputGroup>
+        <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password"></InputGroup>
       </form>
       <div class="btn_wrap">
-        <Ybutton :disabled="isDisabled" @click="loginClick">登录</Ybutton>
+        <YButton :disabled="isDisabled" @click="loginClick">登录</YButton>
       </div>
     </div>
     <div class="footer_wrap">
-      <button class="register" @click="$router.push('/register')">注册账号</button>
+      |
+      <button class="register" @click="$router.push('/register')">注册账号</button>|
     </div>
   </div>
 </template>
 <script>
 import InputGroup from "../components/InputGroup";
 import YButton from "../components/YButton";
+import jwt_decode from "jwt-decode";
+
 export default {
   name: "login",
+  components: {
+    InputGroup,
+    YButton
+  },
   data() {
     return {
       user: {
-        name: "",
         email: "",
         password: ""
       }
     };
   },
-  components: {
-    InputGroup,
-    YButton
+  computed: {
+    isDisabled() {
+      if (this.user.email && this.user.password) return false;
+      else return true;
+    }
   },
-  computed:{
-    isDisabled(){
-      if(this.user.email&&this.user.password){
-        return false;
-      }else{
-        return true
-        }
-      }
-    },
-  methods:{
-    loginClick(){
-      //验证
+  methods: {
+    loginClick() {
       var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
       if (!reg.test(this.user.email)) {
         alert("请输入合法的邮箱地址！");
         return;
-      }else{
-        return true
       }
+      this.$axios.post("/api/users/login", this.user).then(res => {
+        // 登录成功
+        const { token } = res.data;
+        localStorage.setItem("wxpyqToken", token);
+
+        // 解析token
+        const decode = jwt_decode(token);
+        // 存储数据
+        this.$store.dispatch("setUser", decode);
+
+        // 页面跳转
+        this.$router.push("/");
+      });
     }
   }
 };
