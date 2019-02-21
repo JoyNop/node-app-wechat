@@ -4,20 +4,12 @@
     <div class="content">
       <!-- 表单 -->
       <form>
-        <InputGroup 
-        label='账号' 
-        placeholder='请填写邮箱'
-        v-model="user.email"
-        />
-         <InputGroup 
-        label='密码' 
-        placeholder='请填写密码'
-        v-model="user.password"
-        type='password'
-        />
-      
-
+        <InputGroup label="账号" placeholder="请填写邮箱" v-model="user.email"/>
+        <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password"/>
       </form>
+      <div class="btn_wrap">
+        <Ybutton :disabled="isDisabled" @click="loginClick">登录</Ybutton>
+      </div>
     </div>
     <div class="footer_wrap">
       <button class="register" @click="$router.push('/register')">注册账号</button>
@@ -26,18 +18,42 @@
 </template>
 <script>
 import InputGroup from "../components/InputGroup";
+import YButton from "../components/YButton";
 export default {
   name: "login",
-  data(){
+  data() {
     return {
-      user:{
-        email:'',
-        password:'',
+      user: {
+        name: "",
+        email: "",
+        password: ""
       }
-    }
+    };
   },
   components: {
-    InputGroup
+    InputGroup,
+    YButton
+  },
+  computed:{
+    isDisabled(){
+      if(this.user.email&&this.user.password){
+        return false;
+      }else{
+        return true
+        }
+      }
+    },
+  methods:{
+    loginClick(){
+      //验证
+      var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+      if (!reg.test(this.user.email)) {
+        alert("请输入合法的邮箱地址！");
+        return;
+      }else{
+        return true
+      }
+    }
   }
 };
 </script>
