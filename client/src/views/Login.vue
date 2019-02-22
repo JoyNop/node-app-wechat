@@ -51,11 +51,15 @@ export default {
       }
       this.$axios.post("/api/users/login", this.user).then(res => {
         // 登录成功
+        console.log(res);
+        
         const { token } = res.data;
         localStorage.setItem("wxpyqToken", token);
 
         // 解析token
         const decode = jwt_decode(token);
+        console.log(decode);
+        
         // 存储数据
         this.$store.dispatch("setUser", decode);
 
