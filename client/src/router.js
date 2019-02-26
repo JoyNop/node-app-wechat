@@ -13,7 +13,29 @@ const router = new Router({
     {
       path: '/',
       name: 'index',
-      component: Index
+      component: Index,
+      children: [
+        {
+          path: "/chats",
+          name: "chats",
+          component: () => import('./views/Chats');
+        },
+        {
+          path: "/contacts",
+          name: "contacts",
+          component: () => import('./views/Contacts')
+        },
+        {
+          path: "/discover",
+          name: "discover",
+          component: () => import('./views/Discover')
+        },
+        {
+          path: "/me",
+          name: "me",
+          component: () => import('./views/Me')
+        }
+      ]
     },
     {
       path: '/login',
