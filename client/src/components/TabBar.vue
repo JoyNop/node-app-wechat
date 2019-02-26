@@ -1,40 +1,24 @@
 <template>
-<div class="tabbar">
-  <a class="tab-item">
+  <div class="tabbar">
+    <router-link 
+    class="tab-item"
+     v-for="(item,index) in data" 
+     :key="index" :to="item.path"
+     active-class="is-selected">
       <div class="tab-item-icon">
-        <i class="fa fa-comment"></i>
+        <i :class="'fa fa-'+item.icon"></i>
       </div>
-      <div class="tab-item-label">微信</div>
-    </a>
-
-  <a class="tab-item">
-      <div class="tab-item-icon">
-        <i class="fa fa-address-book"></i>
-      </div>
-      <div class="tab-item-label">通讯录</div>
-    </a>
-
-  <a class="tab-item">
-      <div class="tab-item-icon">
-        <i class="fa fa-compass"></i>
-      </div>
-      <div class="tab-item-label">发现</div>
-    </a>
-
-  <a class="tab-item">
-      <div class="tab-item-icon">
-        <i class="fa fa-user"></i>
-      </div>
-      <div class="tab-item-label">我的</div>
-    </a>
-
-</div>
+      <div class="tab-item-label">{{item.title}}</div>
+    </router-link>
+  </div>
 </template>
 
 <script>
 export default {
   name: "tabbar",
-
+  props: {
+    data: Array
+  }
 };
 </script>
 
@@ -45,10 +29,12 @@ export default {
   width: 100%;
   position: fixed;
   bottom: 0;
-  background-image: linear-gradient(180deg,
+  background-image: linear-gradient(
+    180deg,
     #d9d9d9,
     #d9d9d9 50%,
-    transparent 0);
+    transparent 0
+  );
   background-size: 100% 1px;
   background-repeat: no-repeat;
   background-position: 0 0;

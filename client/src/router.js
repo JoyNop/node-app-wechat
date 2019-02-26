@@ -16,9 +16,13 @@ const router = new Router({
       component: Index,
       children: [
         {
+          path: "",
+          redirect:"/chats"
+        },
+        {
           path: "/chats",
           name: "chats",
-          component: () => import('./views/Chats');
+          component: () => import('./views/Chats')
         },
         {
           path: "/contacts",

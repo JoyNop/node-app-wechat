@@ -1,7 +1,7 @@
 <template>
 <div class="index">
   <router-view></router-view>主页99999999999999999999999
-  <TabBar />
+  <TabBar :data="tabbarData"/>
 </div>
 </template>
 
@@ -11,6 +11,31 @@ export default {
   name: "index",
   components: {
     TabBar
+  },
+  data() {
+    return {
+      tabbarData: [{
+          title: "微信",
+          icon: "comment",
+          path: "/chats"
+        },
+        {
+          title: "通讯录",
+          icon: "address-book",
+          path: "/contacts"
+        },
+        {
+          title: "发现",
+          icon: "compass",
+          path: "/discover"
+        },
+        {
+          title: "我",
+          icon: "user",
+          path: "/me"
+        }
+      ]
+    }
   }
 };
 </script>
