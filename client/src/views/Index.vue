@@ -1,11 +1,14 @@
 <template>
   <div class="index">
+    <router-view></router-view>
     主页99999999999999999999999
+    <TabBar/>
   </div>
 </template>
 <script>
+import TabBar from "../components/TabBar";
 export default {
-  name:"index",
-  components:{}
-}
+  name: "index",
+  components: { TabBar }
+};
 </script>
