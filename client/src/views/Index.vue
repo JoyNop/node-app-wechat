@@ -1,6 +1,6 @@
 <template>
 <div class="index">
-  <router-view></router-view>主页99999999999999999999999
+  <router-view></router-view>
   <TabBar :data="tabbarData"/>
 </div>
 </template>
