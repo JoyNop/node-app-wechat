@@ -4,6 +4,9 @@
 
     <div class="container">
       <InfoCell :userInfo="targetUser"/>
+      <div class="btn_wrapper">
+        <YButton @click="$router.push({name:'chat',params:{user:targetUser}})">发消息</YButton>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +14,8 @@
 <script>
 import Header from "../components/Header";
 import InfoCell from "../components/InfoCell";
+import YButton from "../components/YButton";
+
 
 export default {
   name: "information",
@@ -22,7 +27,8 @@ export default {
   methods: {},
   components: {
     Header,
-    InfoCell
+    InfoCell,
+    YButton
   }
 };
 </script>
