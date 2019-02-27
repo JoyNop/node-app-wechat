@@ -12,7 +12,7 @@
       </div>
       <!-- 中 列表 -->
       <div class="content_wrap">
-        <UserCell v-for="(friend) in friendsList" :key="friend._id" :user="friend"/>
+        <UserCell @click="cellClick(friend)" v-for="(friend) in friendsList" :key="friend._id" :user="friend"/>
       </div>
       <!-- 下 数量 -->
       <div class="count_wrap">
@@ -58,6 +58,9 @@ export default {
         return friend.name.indexOf(this.search_value )!=-1;
       })
       console.log(this.friendsList);
+    },
+    cellClick(friend){
+      console.log(friend);
       
     }
   }
