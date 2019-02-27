@@ -61,6 +61,7 @@ export default {
     },
     cellClick(friend){
       console.log(friend);
+      this.$router.push('/information')
       
     }
   }
