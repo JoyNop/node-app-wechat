@@ -7,17 +7,17 @@ import Index from './views/Index'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'index',
+      path: "/",
+      name: "index",
       component: Index,
       children: [
         {
           path: "",
-          redirect:"/chats"
+          redirect: "/chats"
         },
         {
           path: "/chats",
@@ -42,13 +42,13 @@ const router = new Router({
       ]
     },
     {
-      path: '/login',
-      name: 'login',
+      path: "/login",
+      name: "login",
       component: () => import('./views/Login')
     },
     {
-      path: '/register',
-      name: 'register',
+      path: "/register",
+      name: "register",
       component: () => import('./views/Register')
     }
   ]
@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
   if (to.path == "/login" || to.path == "/register") {
     next();
   } else {
-    isLogin ? next() : next('/login');
+    isLogin ? next() : next("/login");
   }
 })
 

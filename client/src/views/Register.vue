@@ -1,4 +1,4 @@
-                         <template>
+<template>
   <div class="register">
     <div class="header">
       <button @click="$router.go(-1)">取消</button>
