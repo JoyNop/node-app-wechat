@@ -2,8 +2,21 @@
   <div class="address_book">
     <Header title="通讯录" btn_icon="user-plus"/>
     <div class="container">
+      <!-- 上 搜索框 -->
+      <div class="search_wrap">
+        <div class="sear_content">
+          <i class="fa fa-search">
+            <input type="text" placeholder="搜索" v-model="search_value">
+          </i>
+        </div>
+      </div>
+      <!-- 中 列表 -->
       <div class="content_wrap">
         <UserCell v-for="(friend) in friendsList" :key="friend._id" :user="friend"/>
+      </div>
+      <!-- 下 数量 -->
+      <div class="count_wrap">
+        <span>{{friendsList.length}}位联系人</span>
       </div>
     </div>
   </div>
@@ -14,13 +27,20 @@ import Header from "../components/Header";
 import UserCell from "../components/UserCell";
 export default {
   name: "contacts",
+  watch:{
+    search_value(){
+      this.filterData()
+    }
+  },
   components: {
     Header,
     UserCell
   },
   data() {
     return {
-      friendsList: []
+      friendsList: [],
+      search_value: "",
+      allFriends:[]
     };
   },
   created() {
@@ -30,7 +50,15 @@ export default {
     getFriendsList() {
       this.$axios.get("/api/users/all").then(res => {
         this.friendsList = res.data;
+        this.allFriends=res.data;
       });
+    },
+    filterData(){
+      this.friendsList=this.allFriends.filter(friend=>{
+        return friend.name.indexOf(this.search_value )!=-1;
+      })
+      console.log(this.friendsList);
+      
     }
   }
 };
