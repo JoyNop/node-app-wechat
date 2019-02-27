@@ -1,13 +1,13 @@
 <template>
   <div class="chat">
     <Header v-if="targetUser" :is-left="true" :title="targetUser.name" btn_icon="ellipsis-h"/>
-  <div class="container">
-    <!-- 聊天内容 -->
-  </div>
-  <div class="footer_wrap">
-    <input type="text" v-model="msgValue">
-    <button :disabled="msgValue==''" @click="sendMessage">发送</button>
-  </div>
+    <div class="container">
+      <!-- 聊天内容 -->
+    </div>
+    <div class="footer_wrap">
+      <input type="text" v-model="msgValue">
+      <button :disabled="msgValue==''" @click="sendMessage">发送</button>
+    </div>
   </div>
 </template>
 
@@ -16,11 +16,29 @@ import Header from "../components/Header";
 
 export default {
   name: "chatview",
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
   methods: {
-    sendMessage(){
+    sendMessage() {
       console.log(this.msgValue);
-      
+    },
+    getMessage() {
+      this.$axios(`/api/profile/msg/${this.user.id}`).then(res => {
+        // console.log(res.data);
+        // 过滤与当前目标对象的聊天数据
+        let result = res.data.filter(data => {
+          console.log(data.target._id);
+          console.log(this.targetUser._id);
+          return data.target._id == this.targetUser._id;
+        });
+
+        if (result.length > 0) {
+          this.messageList = result[0].message;
+        }
+      });
     }
   },
   components: {
@@ -29,12 +47,14 @@ export default {
   data() {
     return {
       targetUser: null,
-      msgValue:""
+      msgValue: "",
+      messageList: []
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.targetUser = to.params.user;
+      vm.getMessage();
     });
   }
 };
