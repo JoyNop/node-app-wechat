@@ -61,6 +61,7 @@ export default {
     },
     cellClick(friend){
       console.log(friend);
+      this.$store.dispatch("setTargetUser",friend)
       this.$router.push('/information')
       
     }
