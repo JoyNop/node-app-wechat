@@ -15,6 +15,7 @@
 <script>
 import Header from "../components/Header";
 import UserCell from "../components/UserCell";
+import WSocket from '../socket.js'
 
 export default {
   name: "chats",
@@ -30,6 +31,77 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user;
+    }
+  },
+  mounted() {
+    WSocket.init({user:this.user},message=>{
+      console.log(message)
+      this.setMsgCount(message)
+    },
+    error=>{
+      console.log(error)
+    })
+  },
+  methods: {  
+    setMsgCount(message) {
+      // 判断消息列表中是否有该用户
+      let chatUser = this.chatDataList.filter(chatItem => {
+        return chatItem.target._id == message.from;
+      });
+
+      // console.log(chatUser);
+      // 如果存在， count + 1 并将消息保存在列表中
+      if (chatUser.length > 0) {
+        chatUser[0].count++;
+        chatUser[0].message.push({
+          msg: message.msg,
+          source: "other"
+        });
+        this.saveMsg(
+          chatUser[0].target,
+          chatUser[0].count,
+          chatUser[0].message
+        );
+      } else {
+        // 如果不存在， 那么获取用户信息 并现实提醒
+        this.getUserInfo(message);
+      }
+    },
+    getUserInfo(message) {
+      // 根据id查询用户信息
+      this.$axios(`/api/users/${message.from}`).then(res => {
+        // console.log(res.data);
+        const msg = [];
+        msg.push({
+          msg: message.msg,
+          source: "other"
+        });
+
+        // 将消息保存在聊天列表中 count为1
+        this.chatDataList.push({
+          target: res.data,
+          count: 1,
+          message: msg
+        });
+
+        this.saveMsg(res.data, 1, msg);
+      });
+    },
+    // 保存方法
+    saveMsg(targetUser, count, msg) {
+      const messageObj = {
+        target: {
+          avatar: targetUser.avatar,
+          name: targetUser.name,
+          _id: targetUser._id
+        },
+        count: count,
+        message: msg,
+        user_id: this.user.id
+      };
+      this.$axios.post("/api/profile/addmsg", messageObj).then(res => {
+        console.log("数据保存成功");
+      });
     }
   },
   beforeRouteEnter(to, from, next) {
