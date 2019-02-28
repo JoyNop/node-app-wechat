@@ -8,6 +8,7 @@ let socketSet = [];
 
 // 连接
 wsServer.on('connection', (websocket, req, res) => {
+  debugger
   const userid = req.url.split('/');
   let isExist = false; // 标记当前用户是否在线
   socketSet.forEach(ws => {

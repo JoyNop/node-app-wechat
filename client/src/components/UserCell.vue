@@ -2,6 +2,7 @@
   <div class="cell-wrapper" @click="$emit('click')">
     <div class="cell-title">
       <img :src="user.avatar" alt>
+      <span class="badge" v-show="count">{{count}}</span>
       <span>{{user.name}}</span>
     </div>
   </div>
@@ -10,7 +11,8 @@
 export default {
   name:"user-cell",
   props:{
-    user:Object
+    user:Object,
+    count :Number
   },
   methods:{
     click(){
