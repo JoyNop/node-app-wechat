@@ -1,3 +1,9 @@
+## 安装依赖
+
+  `npm install`
+
+  `npm client-install`
+
 ## 快速启动
 
 >快速启动
