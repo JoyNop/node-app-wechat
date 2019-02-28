@@ -19,16 +19,16 @@
 
 1. 启动服务端
 
-`npm run server`
+  `npm run server`
 
 2. socket
 
-`npm run socket`
+  `npm run socket`
 
 3. 启动两个客户端
 
   `cd client`
-  
+
   `npm run serve`
 
   新终端
