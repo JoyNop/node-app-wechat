@@ -3,6 +3,22 @@
     <Header v-if="targetUser" :is-left="true" :title="targetUser.name" btn_icon="ellipsis-h"/>
     <div class="container">
       <!-- 聊天内容 -->
+      <div
+        class="content_wrap"
+        :v-if="targetUser && user"
+        v-for="(item,index) in messageList"
+        :key="index">
+        <!-- 别人的内容 -->
+        <div class="left_msg" v-if="item.source == 'other'">
+          <img :src="targetUser.avatar" alt>
+          <span>{{item.msg}}</span>
+        </div>
+        <!-- 我的内容 -->
+        <div class="right_msg" v-if="item.source=='self'">
+          <span>{{item.msg}}</span>
+          <img :src="user.avatar" alt>
+        </div>
+      </div>
     </div>
     <div class="footer_wrap">
       <input type="text" v-model="msgValue">
@@ -13,6 +29,7 @@
 
 <script>
 import Header from "../components/Header";
+import WSocket from "../socket.js";
 
 export default {
   name: "chatview",
@@ -21,9 +38,60 @@ export default {
       return this.$store.getters.user;
     }
   },
+  //服务端推送消息给客户端
+  mounted() {
+    WSocket.init(
+      { user: this.user },
+      message => {
+        //收到消息后，将消息存到数组
+        this.messageList.push({
+          msg: message.msg,
+          source: "other"
+        });
+        // 保存消息
+        this.saveMsg();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  },
   methods: {
     sendMessage() {
-      console.log(this.msgValue);
+      // console.log(this.msgValue);
+      const msgObj = {
+        //需要发送的消息对象
+        target: this.targetUser._id,
+        current: this.user.id,
+        msg: this.msgValue
+      };
+      //发送
+      WSocket.send(msgObj);
+      //本地客户端显示
+      this.messageList.push({
+        msg: this.msgValue,
+        source: "self"
+      });
+      // 保存消息
+      this.saveMsg();
+      //清空input
+      this.msgValue = "";
+    },
+    saveMsg() {
+      //保存消息
+      let message = {
+        target: {
+          avatar: this.targetUser.avatar,
+          name: this.targetUser.name,
+          _id: this.targetUser._id
+        },
+        count: 0,
+        message: this.messageList,
+        user_id: this.user.id
+      };
+      this.$axios.post("/api/profile/addmsg", message).then(res => {
+        this.msgValue = "";
+      });
     },
     getMessage() {
       this.$axios(`/api/profile/msg/${this.user.id}`).then(res => {
