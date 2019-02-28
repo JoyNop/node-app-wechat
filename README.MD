@@ -1,15 +1,15 @@
-##快速启动
+## 快速启动
 
 >快速启动
 >"npm run server\" \"npm run socket\" \"npm run client\
 
 1. 启动后端server，socket，一个客户端
 
-  `npm run dev`  
+    `npm run dev`  
 
 2. 进入客户端文件夹
   
-  `cd client` 
+    `cd client` 
 
 3. 启动另一个客户端
 
